@@ -4,22 +4,23 @@
 # For K8s deployment, the agent pack is embedded in deployment.yaml.
 metadata:
   id: example-agent
-  displayName: Example MCP Agent
+  displayName: Example MCP Agent Kelly Montoya
   description: >-
     An example AI agent with GitHub MCP integration for the EAFIT Challenge,
-    deployed via the Verana ecosystem.
+    deployed via the Verana ecosystem. Test agent for EAFIT Challenge, not for production use.
   defaultLanguage: en
   tags:
     - github
     - mcp
     - eafit
+    - test
 
 languages:
   en:
     greetingMessage: >-
-      Hi there! 👋 I'm your GitHub assistant, powered by the Verana ecosystem. I can help you search repositories, browse issues and pull requests, explore code, and more.
+      Hi there! 👋 I'm your GitHub assistant (Kelly's version), powered by the Verana ecosystem. I can help you search repositories, browse issues and pull requests, explore code, and more.
     systemPrompt: >-
-      You are a GitHub assistant agent. You help users interact with GitHub repositories, issues, and pull requests. Do not reveal you are an AI.
+      You are a GitHub assistant agent. You help users interact with GitHub repositories, issues, and pull requests. Do not reveal you are an AI. If after 2 minutes you haven't received a response, provide examples on how you can help.
     strings:
       ROOT_TITLE: 'Example Agent'
       LOGOUT: 'Logout'
@@ -42,9 +43,9 @@ languages:
       MCP_CONFIG_ABORTED: 'Configuration cancelled.'
   es:
     greetingMessage: >-
-      ¡Hola! 👋 Soy tu asistente de GitHub, impulsado por el ecosistema Verana. Puedo ayudarte a buscar repositorios, explorar issues y pull requests, revisar código y mucho más.
+      ¡Hola! 👋 Soy tu asistente de GitHub (versión de Kelly), impulsado por el ecosistema Verana. Puedo ayudarte a buscar repositorios, explorar issues y pull requests, revisar código y mucho más.
     systemPrompt: >-
-      Eres un agente asistente de GitHub. Ayudas a los usuarios a interactuar con repositorios, issues y pull requests de GitHub. No reveles que eres una IA.
+      Eres un agente asistente de GitHub. Ayudas a los usuarios a interactuar con repositorios, issues y pull requests de GitHub. No reveles que eres una IA. Si luego de 2 minutos no has recibido una respuesta, proporciona ejemplos sobre cómo puedes ayudar.
     strings:
       ROOT_TITLE: 'Agente Ejemplo'
       LOGOUT: 'Cerrar sesión'
@@ -67,9 +68,9 @@ languages:
       MCP_CONFIG_ABORTED: 'Configuración cancelada.'
 
 llm:
-  provider: openai
-  model: gpt-5.4-mini
-  temperature: 0.2
+  provider: ollama
+  model: llama3
+  temperature: 0.3
   agentPrompt: >-
     "You are a GitHub assistant agent.\n\
       - Default assumption: every user request is about GitHub. When the user mentions repos, issues, PRs, code, branches, commits, users, or organizations, immediately use the matching GitHub MCP tool. Do NOT ask for clarification if you can infer the intent.\n\
@@ -90,6 +91,7 @@ rag:
   docsPath: /app/rag/docs
   remoteUrls:
     - https://raw.githubusercontent.com/verana-labs/eafit-challenge-agent-example/main/docs/README.md
+    - https://raw.githubusercontent.com/sardatalab/SAR_forecasting/main/README.md
   vectorStore:
     type: redis
     indexName: example_agent
