@@ -84,6 +84,7 @@ jobs:
           kubectl create secret generic example-agent-db-secret \
             --namespace "$NAMESPACE" \
             --from-literal=POSTGRES_PASSWORD="$VSAGENT_DB_PWD" \
+            --from-literal=AGENT_WALLET_KEY="${{ secrets.EXAMPLE_AGENT_WALLET_KEY }}" \
             --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Create agent pack ConfigMap
@@ -111,12 +112,12 @@ jobs:
             --set chatbot.secret.OPENAI_API_KEY="${{ secrets.EXAMPLE_AGENT_OPENAI_API_KEY }}" \
             --set chatbot.secret.MCP_CONFIG_ENCRYPTION_KEY="${{ secrets.EXAMPLE_AGENT_MCP_CONFIG_ENCRYPTION_KEY }}" \
             --set chatbot.secret.POSTGRES_PASSWORD="${{ secrets.EXAMPLE_AGENT_POSTGRES_PASSWORD }}" \
-            --set postgres.secret.POSTGRES_PASSWORD="${{ secrets.EXAMPLE_AGENT_POSTGRES_PASSWORD }}" \
-            --set vs-agent-chart.extraEnv[0].name=AGENT_WALLET_ID \
-            --set vs-agent-chart.extraEnv[0].value="Example Agent" \
-            --set vs-agent-chart.extraEnv[1].name=AGENT_WALLET_KEY \
-            --set vs-agent-chart.extraEnv[1].value="${{ secrets.EXAMPLE_AGENT_WALLET_KEY }}" \
-            --wait --timeout 300s
+            --set postgres.secret.POSTGRES_PASSWORD="${{ secrets.EXAMPLE_AGENT_POSTGRES_PASSWORD }}" 
+         #   --set vs-agent-chart.extraEnv[0].name=AGENT_WALLET_ID \
+         #   --set vs-agent-chart.extraEnv[0].value="Example Agent" \
+         #   --set vs-agent-chart.extraEnv[1].name=AGENT_WALLET_KEY \
+         #   --set vs-agent-chart.extraEnv[1].value="${{ secrets.EXAMPLE_AGENT_WALLET_KEY }}" \
+         #   --wait --timeout 300s
 
       - name: Restart chatbot to pick up ConfigMap changes
         if: inputs.step == 'deploy' || inputs.step == 'all'

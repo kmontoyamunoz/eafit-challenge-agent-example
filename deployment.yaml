@@ -154,6 +154,11 @@ vs-agent-chart:
   extraEnv:
     - name: AGENT_WALLET_ID
       value: "Example Agent"
+    - name: AGENT_WALLET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: example-agent-db-secret
+          key: AGENT_WALLET_KEY
     - name: USE_CORS
       value: "true"
     - name: REDIS_HOST
